@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carla-e2e"
+version = "1.0.0"
+description = "Standalone Closed-Loop Evaluator for End-to-End Autonomous Driving Foundation Models in CARLA (0.9.14 - 0.10+)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "CARLA Autonomous Driving & AI Team"}
+]
+keywords = ["carla", "autonomous-driving", "e2e", "vla", "qwendrive", "autoe2e", "alpamayo", "vad"]
+dependencies = [
+    "numpy>=1.22.0",
+    "pygame>=2.1.0",
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "timm>=0.9.0",
+    "pillow>=9.0.0",
+    "opencv-python>=4.6.0",
+]
+
+[project.optional-dependencies]
+carla = [
+    "carla>=0.9.14",
+]
+onnx = [
+    "onnxruntime>=1.15.0",
+]
+vla = [
+    "transformers>=4.40.0",
+    "accelerate>=0.25.0",
+]
+
+[project.scripts]
+carla-e2e = "test_e2e_closed_loop:main"
+carla-e2e-server = "e2e_model_server:main"
+
