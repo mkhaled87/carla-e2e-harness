@@ -98,6 +98,8 @@ class ClosedLoopE2ERunner:
         spectator_view_mode: str = "chase",
         model_path: str | None = None,
         record_dir: str | Path | None = None,
+        screenshot_path: str | Path | None = None,
+        screenshot_tick: int = 5,
     ) -> None:
         self.world = world
         self.ego = ego_vehicle
@@ -114,6 +116,9 @@ class ClosedLoopE2ERunner:
         self.spectator_follow = spectator_follow
         self.spectator_view_mode = spectator_view_mode
         self.record_dir = Path(record_dir).expanduser().resolve() if record_dir else None
+        self.screenshot_path = Path(screenshot_path).expanduser().resolve() if screenshot_path else None
+        self.screenshot_tick = screenshot_tick
+        self._screenshot_taken = False
 
         self.artifact_recorder: Any = None
         if self.record_dir:
@@ -550,6 +555,14 @@ class ClosedLoopE2ERunner:
                 if not keep_running:
                     logger.info("User requested exit via Pygame window.")
                     raise KeyboardInterrupt
+
+                if self.screenshot_path and self.step_count >= self.screenshot_tick and not self._screenshot_taken:
+                    try:
+                        self.display.screenshot(self.screenshot_path)
+                        logger.info(f"[COCKPIT SCREENSHOT] Captured and saved to {self.screenshot_path}")
+                        self._screenshot_taken = True
+                    except Exception as e:
+                        logger.warning(f"Failed to capture cockpit screenshot: {e}")
 
             return step_data
 

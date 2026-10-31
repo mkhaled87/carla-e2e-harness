@@ -309,6 +309,8 @@ def run_live_simulation(args: argparse.Namespace) -> int:
             spectator_view_mode=args.spectator_view,
             model_path=args.model_path,
             record_dir=args.record,
+            screenshot_path=args.screenshot,
+            screenshot_tick=args.screenshot_tick,
         )
         runner.setup()
 
@@ -363,6 +365,8 @@ def run_dry_run_simulation(args: argparse.Namespace) -> int:
         spectator_follow=False,
         model_path=args.model_path,
         record_dir=args.record,
+        screenshot_path=args.screenshot,
+        screenshot_tick=args.screenshot_tick,
     )
     runner.setup()
 
@@ -427,6 +431,19 @@ def main() -> int:
         default=None,
         metavar="ARTIFACT_DIR",
         help="Record simulation artifact bundle (spectator video, camera streams, vehicle pose, and sensors) to specified directory",
+    )
+    parser.add_argument(
+        "--screenshot",
+        type=str,
+        default=None,
+        metavar="PATH",
+        help="Capture and save a screenshot of the main cockpit window to PATH",
+    )
+    parser.add_argument(
+        "--screenshot-tick",
+        type=int,
+        default=5,
+        help="Step/tick number at which to capture the screenshot (default: 5)",
     )
     parser.add_argument("--dry-run", action="store_true", help="Run offline dry-run test without live CARLA server")
     args = parser.parse_args()

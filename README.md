@@ -2,6 +2,8 @@
 
 > **Universal Closed-Loop Evaluation, Benchmarking & Artifact Recording Harness for End-to-End Autonomous Driving Foundation Models in CARLA.**
 
+![CARLA E2E Cockpit - AutoE2E Evaluation in CARLA](docs/images/autoe2e_cockpit.png)
+
 Compatible with **CARLA 0.9.14, 0.9.15, 0.9.16, and 0.10.0+ (UE4 and UE5 / UE 5.8)**.
 
 ---

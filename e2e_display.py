@@ -23,6 +23,8 @@ class NullDisplay:
     """Headless dummy display when running in non-GUI or CI environments."""
     def draw(self, **_: Any) -> bool:
         return True
+    def screenshot(self, path: Any) -> None:
+        pass
     def close(self) -> None:
         pass
 
@@ -64,6 +66,13 @@ class E2EDashboardDisplay:
         self.font_mono = pygame.font.SysFont("Courier,Consolas,Monospace", 13)
 
         self._surface_cache: dict[str, Any] = {}
+
+    def screenshot(self, path: str | os.PathLike[str]) -> None:
+        """Save current display buffer as an image file."""
+        from pathlib import Path
+        p = Path(path)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        self.pygame.image.save(self.screen, str(p))
 
     def _handle_events(self) -> bool:
         for event in self.pygame.event.get():
